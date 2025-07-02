@@ -120,12 +120,22 @@ Run the main script and follow the interactive menu:
 python main.py
 ```
 
-- **Option 1:** Fetch competitors and download their historical stock data
+- **Option 1:** Fetch competitors and download their historical stock data (cache-first approach)
 - **Option 2:** Plot historical and predicted closing prices
 - **Option 3:** Predict future prices for a ticker (simple trend)
 - **Option 4:** Joint linear regression forecast for all companies
 - **Option 5:** Predictive LSTM model for all companies
-- **Option 6:** Exit
+- **Option 6:** Manage Redis Cache
+- **Option 7:** Exit
+
+### Cache-First Approach (Option 1)
+When fetching competitor data, the application now:
+1. **Checks cache first** before deleting existing CSV files
+2. **Creates CSVs from cache** where data is available
+3. **Only makes API calls** for data not found in cache
+4. **Deletes old CSVs** and replaces with new ones (from cache or API)
+
+This approach maximizes cache usage and minimizes unnecessary API calls.
 
 ## Output
 - Historical and predicted data are saved as CSVs in the `yfinance_data/` folder.
